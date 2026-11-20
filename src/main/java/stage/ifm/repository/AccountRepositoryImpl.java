@@ -1,6 +1,9 @@
 package stage.ifm.repository;
 
+import stage.ifm.model.AccountStatus;
+import stage.ifm.model.AccountType;
 import stage.ifm.model.BankAccount;
+import stage.ifm.model.BankDirector;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +55,14 @@ public class AccountRepositoryImpl implements AccountRepository {
     
     public void populateData(){
         for (int i = 0; i < 10; i++) {
+             BankAccount bankAccount = BankDirector.Accountsbuilder()
+                     .balance(10000+Math.random()*900000)
+                     .type(Math.random()>0.5? AccountType.SAVING_ACCOUNT:AccountType.CURRENT_ACCOUNT)
+                     .status(Math.random()>0.5? AccountStatus.CREATED:AccountStatus.ACTIVATED)
+                     .currency(Math.random()>0.5? "MAD":"USD")
+                     .build();
+
+             save(bankAccount);
         }
     }
 }
