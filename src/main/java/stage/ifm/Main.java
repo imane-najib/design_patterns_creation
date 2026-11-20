@@ -5,6 +5,7 @@ import stage.ifm.model.BankAccount;
 import stage.ifm.repository.AccountRepositoryImpl;
 import stage.ifm.util.JsonSerializer;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -12,20 +13,26 @@ import java.util.function.Predicate;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         JsonSerializer<BankAccount> bankAccountJsonSerializer = new JsonSerializer<BankAccount>() ;
         AccountRepositoryImpl accountRepository = AccountRepositoryImpl.getInstance();
-        accountRepository.populateData();
-        List<BankAccount> bankAccounts = accountRepository.findAll();
+        for (int i = 0; i < 10; i++) {
+            new Thread(()-> {
+                accountRepository.populateData();
+            }).start();
+        }
+
+       /* List<BankAccount> bankAccounts = accountRepository.findAll();
         bankAccounts.stream().map(bankAccountJsonSerializer::toJson).forEach(System.out::println);
 
         System.out.println("============================");
         BankAccount bankAccount = accountRepository.findById(1L).orElse(null);
         if (bankAccount != null) {
             System.out.println(bankAccountJsonSerializer.toJson(bankAccount));
-        }
+        }*/ 
 
-        System.out.println("============================");
+        System.out.println("Tape a character: ");
+        System.in.read();
 
         List<BankAccount> bankAccounts2 = accountRepository.searchAccount(new Predicate<BankAccount>() {
             @Override

@@ -24,10 +24,14 @@ public class AccountRepositoryImpl implements AccountRepository {
     private Map<Long, BankAccount> bankAccountMap = new HashMap<>();
     private long accountsCount=0;
     @Override
-    public BankAccount save(BankAccount bankAccount) {
-        Long accountId = ++accountsCount;
-        bankAccount.setAccountId(accountId);
-        bankAccountMap.put(accountId, bankAccount);
+    public synchronized BankAccount save(BankAccount bankAccount) {
+
+            Long accountId = ++accountsCount;
+            bankAccount.setAccountId(accountId);
+            bankAccountMap.put(accountId, bankAccount);
+
+
+
         return bankAccount;
     }
 
@@ -72,6 +76,11 @@ public class AccountRepositoryImpl implements AccountRepository {
 
              save(bankAccount);
         }
+        System.out.println("******************************");
+        System.out.println(Thread.currentThread().getName());
+        System.out.println("Account Count = "+accountsCount);
+        System.out.println("Size: "+bankAccountMap.values().size());
+        System.out.println("******************************");
     }
 
     public static  AccountRepositoryImpl getInstance() {
