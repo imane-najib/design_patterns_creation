@@ -1,4 +1,107 @@
 package stage.ifm.model;
 
 public class BankAccount {
+    private Long accountId;
+    private double balance;
+    private String currency;
+    private AccountType type;
+    private AccountStatus status;
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public AccountType getType() {
+        return type;
+    }
+
+    public void setType(AccountType type) {
+        this.type = type;
+    }
+
+    public AccountStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AccountStatus status) {
+        this.status = status;
+    }
+
+    public BankAccount() {
+    }
+
+    public BankAccount(Long accountId, AccountStatus status, AccountType type, String currency, double balance) {
+        this.accountId = accountId;
+        this.status = status;
+        this.type = type;
+        this.currency = currency;
+        this.balance = balance;
+    }
+
+    @Override
+    public String toString() {
+        return "BankAccount{" +
+                "accountId=" + accountId +
+                ", balance=" + balance +
+                ", currency='" + currency + '\'' +
+                ", type=" + type +
+                ", status=" + status +
+                '}';
+    }
+
+
+
+    public static class AccountBuilder {
+        private BankAccount bankAccount= new BankAccount();
+
+        public AccountBuilder accountId(Long accountId) {
+            bankAccount.accountId = accountId;
+            return this;
+        }
+
+        public AccountBuilder balance(double balance) {
+            bankAccount.balance = balance;
+            return this;
+        }
+
+        public AccountBuilder currency(String currency) {
+            bankAccount.currency = currency;
+            return this;
+        }
+
+        public AccountBuilder type(AccountType type) {
+            bankAccount.type = type;
+            return this;
+        }
+
+        public AccountBuilder status(AccountStatus status) {
+            bankAccount.status = status;
+            return this;
+        }
+
+        public BankAccount build() {
+            return this.bankAccount;
+        }
+    }
 }
+
