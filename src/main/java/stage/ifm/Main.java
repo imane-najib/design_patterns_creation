@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 public class Main {
     public static void main(String[] args) {
         JsonSerializer<BankAccount> bankAccountJsonSerializer = new JsonSerializer<BankAccount>() ;
-        AccountRepositoryImpl accountRepository = new AccountRepositoryImpl();
+        AccountRepositoryImpl accountRepository = AccountRepositoryImpl.getInstance();
         accountRepository.populateData();
         List<BankAccount> bankAccounts = accountRepository.findAll();
         bankAccounts.stream().map(bankAccountJsonSerializer::toJson).forEach(System.out::println);
