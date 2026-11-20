@@ -24,14 +24,16 @@ public class AccountRepositoryImpl implements AccountRepository {
     private Map<Long, BankAccount> bankAccountMap = new HashMap<>();
     private long accountsCount=0;
     @Override
-    public synchronized BankAccount save(BankAccount bankAccount) {
+    public  BankAccount save(BankAccount bankAccount) {
+            Long accountId;
+            synchronized (this){
+                accountId = ++accountsCount;
+            }
 
-            Long accountId = ++accountsCount;
             bankAccount.setAccountId(accountId);
-            bankAccountMap.put(accountId, bankAccount);
-
-
-
+            synchronized (this){
+                bankAccountMap.put(accountId, bankAccount);
+            }
         return bankAccount;
     }
 
@@ -65,7 +67,7 @@ public class AccountRepositoryImpl implements AccountRepository {
         bankAccountMap.remove(id);
     }
     
-    public void populateData(){
+    public  void populateData(){
         for (int i = 0; i < 10; i++) {
              BankAccount bankAccount = BankDirector.Accountsbuilder()
                      .balance(10000+Math.random()*900000)
