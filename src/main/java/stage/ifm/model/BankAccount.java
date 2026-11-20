@@ -6,6 +6,7 @@ public class BankAccount implements Cloneable{
     private String currency;
     private AccountType type;
     private AccountStatus status;
+    private Customer customer;
 
     public Long getAccountId() {
         return accountId;
@@ -58,6 +59,14 @@ public class BankAccount implements Cloneable{
         this.balance = balance;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     @Override
     public String toString() {
         return "BankAccount{" +
@@ -107,7 +116,9 @@ public class BankAccount implements Cloneable{
 
     @Override
     public BankAccount clone() throws CloneNotSupportedException {
-        return (BankAccount) super.clone();
+        BankAccount bankAccount=  (BankAccount) super.clone();
+        bankAccount.setCustomer(this.customer.clone());
+        return bankAccount;
     }
 }
 
